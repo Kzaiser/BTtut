@@ -16,16 +16,32 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.lang.reflect.Array;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "MainActivity";
 
     BluetoothAdapter mBluetoothAdapter;
     Button btnEnableDisable_Discoverable;
+
+    BluetoothConnectionService mBluetoothConnection;
+
+    Button btnStartConnection;
+    Button btnSend;
+
+    EditText etSend;
+
+    private static final UUID MY_UUID_INSECURE =
+            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+
+    BluetoothDevice mBTDevice;
+
     public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
     public DeviceListAdapter mDeviceListAdapter;
     ListView lvNewDevices;
@@ -157,10 +173,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btnONOFF = (Button) findViewById(R.id.btnONOFF);
-        btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable);
+//        Button btnONOFF = (Button) findViewById(R.id.btnONOFF);
+//        btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable);
         lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
         mBTDevices = new ArrayList<>();
+
+        btnStartConnection = (Button) findViewById(R.id.btnStartConnection);
+        btnSend = (Button) findViewById(R.id.btnSend);
+        etSend = (EditText) findViewById(R.id.editText);
 
         // Broadcasts when bond state changes (ie:pairing)
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
@@ -170,13 +190,42 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         lvNewDevices.setOnItemClickListener(MainActivity.this);
 
-        btnONOFF.setOnClickListener(new View.OnClickListener() {
+//        btnONOFF.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d(TAG, "onClick: enabling/disabling Bluetooth.");
+//                enableDisableBT();
+//            }
+//        });
+
+        btnStartConnection.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: enabling/disabling Bluetooth.");
-                enableDisableBT();
+            public void onClick(View v) {
+                startConnection();
             }
         });
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                byte[] bytes = etSend.getText().toString().getBytes(Charset.defaultCharset());
+                mBluetoothConnection.write(bytes);
+            }
+        });
+    }
+        // Create method for starting connection
+        // WARNING: App will crash and connection will fail if not paired
+        public void startConnection() {
+            startBtConnection(mBTDevice, MY_UUID_INSECURE);
+        }
+
+    /*
+    Start Chat service
+     */
+    public void startBtConnection(BluetoothDevice device, UUID uuid) {
+        Log.d(TAG, "startBTConnection: Initializing RFCOM Bluetooth Connection.");
+
+        mBluetoothConnection.startClient(device, uuid);
     }
 
     public void enableDisableBT() {
@@ -261,6 +310,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
             Log.d(TAG, "Trying to pair with " + deviceName);
             mBTDevices.get(i).createBond();
+
+            mBTDevice = mBTDevices.get(i);
+            mBluetoothConnection = new BluetoothConnectionService(MainActivity.this);
         }
 
     }

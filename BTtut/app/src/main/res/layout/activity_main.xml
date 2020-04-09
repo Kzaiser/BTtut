@@ -6,37 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnONOFF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="260dp"
-        android:layout_marginLeft="260dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="63dp"
-        android:layout_marginRight="63dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/on_off"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.088" />
+    <!--    <Button-->
+    <!--        android:id="@+id/btnONOFF"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_marginStart="260dp"-->
+    <!--        android:layout_marginLeft="260dp"-->
+    <!--        android:layout_marginTop="55dp"-->
+    <!--        android:layout_marginEnd="63dp"-->
+    <!--        android:layout_marginRight="63dp"-->
+    <!--        android:layout_marginBottom="16dp"-->
+    <!--        android:text="@string/on_off"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.088" />-->
 
-    <Button
-        android:id="@+id/btnDiscoverable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="110dp"
-        android:layout_marginBottom="165dp"
-        android:onClick="btnEnableDisable_Discoverable"
-        android:text="@string/enable_discoverable"
-        app:layout_constraintBottom_toTopOf="@+id/lvNewDevices"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnONOFF" />
+    <!--    <Button-->
+    <!--        android:id="@+id/btnDiscoverable"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="110dp"-->
+    <!--        android:layout_marginBottom="165dp"-->
+    <!--        android:onClick="btnEnableDisable_Discoverable"-->
+    <!--        android:text="@string/enable_discoverable"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/lvNewDevices"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/btnONOFF"-->
+    <!--        app:layout_constraintVertical_bias="1.0" />-->
 
     <Button
         android:id="@+id/btnFindUnpairedDevices"
@@ -45,13 +46,9 @@
         android:layout_marginStart="71dp"
         android:layout_marginLeft="71dp"
         android:layout_marginTop="109dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginRight="99dp"
         android:layout_marginBottom="110dp"
         android:onClick="btnDiscover"
         android:text="@string/discover"
-        app:layout_constraintBottom_toTopOf="@+id/btnDiscoverable"
-        app:layout_constraintEnd_toStartOf="@+id/btnONOFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,6 +64,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnStartConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="109dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginBottom="158dp"
+        android:text="@string/start_connection"
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnFindUnpairedDevices"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="385dp"
+        android:layout_height="61dp"
+        android:layout_below="@+id/lvNewDevices"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="154dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="7dp"
+        android:autofillHints="Enter Text Here"
+        android:hint="@string/enter_text_here"
+        app:layout_constraintBottom_toTopOf="@+id/btnSend"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFindUnpairedDevices" />
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/editText"
+        android:layout_toRightOf="@+id/editText"
+        android:text="@string/send"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        tools:layout_editor_absoluteX="278dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
